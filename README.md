@@ -17,7 +17,7 @@ A lightweight Go-based utility to merge multiple CSV files using a common key co
 
 Create a `config.json` file that lists all possible header names that should be treated as equivalent join keys. For example:
 
-```json
+
 ["req id", "req", "ReqID"]
 
 This tells the joiner to match any column in any CSV file with a name equal to one of these (case-insensitive) and use it as the join key.
