@@ -125,16 +125,21 @@ func main() {
 	}
 
 	// Collect all headers from merged data
-	mergedHeadersMap := map[string]bool{}
+	nonEmptyColumns := map[string]bool{}
 	for _, row := range baseData {
-		for k := range row {
-			mergedHeadersMap[k] = true
+		for k, v := range row {
+			if strings.TrimSpace(v) != "" {
+				nonEmptyColumns[k] = true
+			}
 		}
 	}
 
 	// Reorder: key column first
-	finalHeaders := []string{baseKeyName}
-	for h := range mergedHeadersMap {
+	finalHeaders := []string{}
+	if nonEmptyColumns[baseKeyName] {
+		finalHeaders = append(finalHeaders, baseKeyName)
+	}
+	for h := range nonEmptyColumns {
 		if normalize(h) != normalize(baseKeyName) {
 			finalHeaders = append(finalHeaders, h)
 		}
